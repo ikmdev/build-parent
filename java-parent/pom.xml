@@ -446,6 +446,7 @@
                             <forkCount>0.5C</forkCount>
                             <reuseForks>false</reuseForks>
                             <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
+                            <!-- Sets the VM argument line used when integration tests are run. -->
                             <argLine>@{failsafeArgLine}</argLine>
                         </configuration>
                     </plugin>
