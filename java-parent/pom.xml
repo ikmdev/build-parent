@@ -52,6 +52,9 @@
         <slf4j.version>2.0.17</slf4j.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
+
+        <surefireArgLine></surefireArgLine>
+        <failsafeArgLine></failsafeArgLine>
     </properties>
 
     <dependencyManagement>
@@ -415,6 +418,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <useModulePath>true</useModulePath>
+                            <argLine>@{surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
 
@@ -442,6 +446,7 @@
                             <forkCount>0.5C</forkCount>
                             <reuseForks>false</reuseForks>
                             <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
+                            <argLine>@{failsafeArgLine}</argLine>
                         </configuration>
                     </plugin>
 
@@ -522,6 +527,9 @@
                                 </goals>
                                 <configuration>
                                     <destFile>${project.build.directory}/jacoco/jacoco-ut.exec</destFile>
+                                    <!-- Sets the name of the property containing the settings for JaCoCo
+                                        runtime agent. -->
+                                    <propertyName>surefireArgLine</propertyName>
                                 </configuration>
                             </execution>
 
@@ -536,6 +544,9 @@
                                 <configuration>
                                     <!-- Sets the path to the file which contains the execution data. -->
                                     <destFile>${project.build.directory}/jacoco/jacoco-it.exec</destFile>
+                                    <!-- Sets the name of the property containing the settings for JaCoCo
+                                        runtime agent. -->
+                                    <propertyName>failsafeArgLine</propertyName>
                                 </configuration>
                             </execution>
 
