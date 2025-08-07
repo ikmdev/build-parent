@@ -21,8 +21,6 @@
     <properties>
         <!-- make sure to change the hard coded java version in the enforcer as well -->
 
-        <java.version>24</java.version>
-
         <!-- Default Lifecycle additions -->
         <maven.resources-plugin.version>3.2.0</maven.resources-plugin.version>
         <maven.surefire-plugin.version>3.5.3</maven.surefire-plugin.version>
