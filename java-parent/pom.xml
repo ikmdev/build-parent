@@ -6,7 +6,6 @@
     <parent>
         <groupId>dev.ikm.build</groupId>
         <artifactId>parent</artifactId>
-        <version>1.67.0-dist-SNAPSHOT</version>
     </parent>
     <artifactId>java-parent</artifactId>
     <name>Java Parent</name>
@@ -36,7 +35,6 @@
 
         <!-- Compiler Extensions -->
         <record-builder-core.version>34</record-builder-core.version>
-        <auto-service.version>1.0.1</auto-service.version>
 
         <!-- Style and Code Quality Check Plugins -->
         <maven-dependency-analyzer.version>1.16.0</maven-dependency-analyzer.version>
@@ -47,14 +45,20 @@
         <maven.spotbugs-plugin.version>4.9.3.0</maven.spotbugs-plugin.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
-        <junit.version>5.12.2</junit.version>
+        <junit.version>6.0.0</junit.version>
         <slf4j.version>2.0.17</slf4j.version>
         <log4j.version>3.0.0-alpha1</log4j.version>
 
         <eclipse-plugin.version>1.0.0</eclipse-plugin.version>
 
-        <surefireArgLine></surefireArgLine> <!-- surefireArgLine must be present even if blank to avoid errors -->
-        <failsafeArgLine></failsafeArgLine> <!-- failsafeArgLine must be present even if blank to avoid errors -->
+        <asm.version>9.9</asm.version>
+
+        <compiler.args></compiler.args> <!-- compiler.args must be declared even if empty -->
+        <surefire.args></surefire.args> <!-- surefire.args must be declared even if empty -->
+        <failsafe.args></failsafe.args> <!-- failsafe.args must be declared even if empty -->
+        <preview.jvmArgs></preview.jvmArgs> <!-- preview.jvmArgs must be declared even if empty -->
+        <javadoc.args></javadoc.args> <!-- javadoc.extraArgs must be declared even if empty -->
+
     </properties>
 
     <dependencyManagement>
@@ -97,11 +101,43 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler-plugin.version}</version>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <compilerArgs>${compiler.args}</compilerArgs>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>${asm.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm-commons</artifactId>
+                            <version>${asm.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm-tree</artifactId>
+                            <version>${asm.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm-util</artifactId>
+                            <version>${asm.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>@{surefireArgLine}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
+                        <argLine>${surefire.args}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
                     </configuration>
                 </plugin>
 
@@ -111,14 +147,26 @@
                     <version>${maven.failsafe-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                        <argLine>${failsafe.args}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
                     </configuration>
                 </plugin>
 
-                <plugin>
+                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compiler-plugin.version}</version>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <failOnError>false</failOnError>
+                        <doclint>none</doclint>
+                        <additionalJOptions>
+                            <additionalJOption>${preview.jvmArgs}</additionalJOption>
+                            <additionalJOption>${javadoc.args}</additionalJOption>
+                            <!-- If using incubator modules for Javadoc, uncomment:
+                            <additionalJOption>- -add-modules</additionalJOption>
+                            <additionalJOption>jdk.incubator.vector</additionalJOption>
+                            -->
+                        </additionalJOptions>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -127,11 +175,6 @@
                     <version>${maven.war-plugin.version}</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                </plugin>
 
                 <!--======================================================-->
                 <!-- Code Quality Check Plugins                           -->
@@ -216,18 +259,7 @@
                             <artifactId>record-builder-processor</artifactId>
                             <version>${record-builder-core.version}</version>
                         </annotationProcessorPath>
-                        <annotationProcessorPath>
-                            <groupId>com.google.auto.service</groupId>
-                            <artifactId>auto-service</artifactId>
-                            <version>${auto-service.version}</version>
-                        </annotationProcessorPath>
                     </annotationProcessorPaths>
-                    <annotationProcessors>
-                        <annotationProcessor>io.soabase.recordbuilder.processor.RecordBuilderProcessor
-                        </annotationProcessor>
-                        <annotationProcessor>com.google.auto.service.processor.AutoServiceProcessor
-                        </annotationProcessor>
-                    </annotationProcessors>
                 </configuration>
             </plugin>
 
@@ -526,7 +558,7 @@
                                     <destFile>${project.build.directory}/jacoco/jacoco-ut.exec</destFile>
                                     <!-- Sets the name of the property containing the settings for JaCoCo
                                         runtime agent. -->
-                                    <propertyName>surefireArgLine</propertyName>
+                                    <propertyName>surefire.args</propertyName>
                                 </configuration>
                             </execution>
 
@@ -703,6 +735,55 @@
                 </plugins>
             </reporting>
         </profile>
+        <profile>
+            <id>macos-aarch64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <platform.classifier>osx</platform.classifier>
+            </properties>
+        </profile>
 
+        <profile>
+            <id>macos-x86_64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <platform.classifier>osx</platform.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x86_64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <platform.classifier>linux64</platform.classifier>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows-x86_64</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <platform.classifier>win64</platform.classifier>
+            </properties>
+        </profile>
     </profiles>
 </project>
