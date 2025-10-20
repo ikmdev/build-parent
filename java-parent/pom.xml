@@ -59,6 +59,9 @@
         <preview.jvmArgs></preview.jvmArgs> <!-- preview.jvmArgs must be declared even if empty -->
         <javadoc.args></javadoc.args> <!-- javadoc.extraArgs must be declared even if empty -->
 
+        <surefireArgLine>${surefire.args}</surefireArgLine> <!-- surefireArgLine must be present even if blank to avoid errors -->
+        <failsafeArgLine>${failsafe.args}</failsafeArgLine> <!-- failsafeArgLine must be present even if blank to avoid errors -->
+
     </properties>
 
     <dependencyManagement>
@@ -137,7 +140,7 @@
                     <version>${maven.surefire-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>${surefire.args}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
+                        <argLine>@{surefireArgLine}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
                     </configuration>
                 </plugin>
 
@@ -147,7 +150,7 @@
                     <version>${maven.failsafe-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>${failsafe.args}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
                     </configuration>
                 </plugin>
 
@@ -558,7 +561,7 @@
                                     <destFile>${project.build.directory}/jacoco/jacoco-ut.exec</destFile>
                                     <!-- Sets the name of the property containing the settings for JaCoCo
                                         runtime agent. -->
-                                    <propertyName>surefire.args</propertyName>
+                                    <propertyName>surefireArgLine</propertyName>
                                 </configuration>
                             </execution>
 
