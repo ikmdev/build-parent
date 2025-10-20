@@ -846,7 +846,7 @@
         <profile>
             <id>deploy-ike-public</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <distributionManagement>
                 <repository>
