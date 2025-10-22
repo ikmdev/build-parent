@@ -41,7 +41,7 @@
         <maven.checkstyle-plugin.version>3.6.0</maven.checkstyle-plugin.version>
         <checkstyle.version>10.23.1</checkstyle.version>
         <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
-        <maven.jacoco-plugin.version>0.8.13</maven.jacoco-plugin.version>
+        <maven.jacoco-plugin.version>0.8.14</maven.jacoco-plugin.version>
         <maven.spotbugs-plugin.version>4.9.8.1</maven.spotbugs-plugin.version>
         <jlgrock.checkstyle.version>2.1.0</jlgrock.checkstyle.version>
         <maven.pom-check-maven-plugin.version>1.0.0</maven.pom-check-maven-plugin.version>
@@ -58,6 +58,9 @@
         <failsafe.args></failsafe.args> <!-- failsafe.args must be declared even if empty -->
         <preview.jvmArgs></preview.jvmArgs> <!-- preview.jvmArgs must be declared even if empty -->
         <javadoc.args></javadoc.args> <!-- javadoc.extraArgs must be declared even if empty -->
+
+        <surefireArgLine>${preview.jvmArgs}</surefireArgLine>
+        <failsafeArgLine>${preview.jvmArgs}</failsafeArgLine>
 
     </properties>
 
@@ -137,7 +140,7 @@
                     <version>${maven.surefire-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>${surefire.args}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
+                        <argLine>@{surefire.args}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
                     </configuration>
                 </plugin>
 
@@ -147,7 +150,7 @@
                     <version>${maven.failsafe-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>${failsafe.args}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
+                        <argLine>@{failsafeArgLine}</argLine> <!-- Sets the VM argument line used when integration tests are run -->
                     </configuration>
                 </plugin>
 
@@ -558,7 +561,7 @@
                                     <destFile>${project.build.directory}/jacoco/jacoco-ut.exec</destFile>
                                     <!-- Sets the name of the property containing the settings for JaCoCo
                                         runtime agent. -->
-                                    <propertyName>surefire.args</propertyName>
+                                    <propertyName>surefireArgLine</propertyName>
                                 </configuration>
                             </execution>
 
