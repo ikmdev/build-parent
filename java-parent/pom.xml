@@ -59,8 +59,8 @@
         <preview.jvmArgs></preview.jvmArgs> <!-- preview.jvmArgs must be declared even if empty -->
         <javadoc.args></javadoc.args> <!-- javadoc.extraArgs must be declared even if empty -->
 
-        <surefireArgLine>${preview.jvmArgs}</surefireArgLine>
-        <failsafeArgLine>${preview.jvmArgs}</failsafeArgLine>
+        <surefireArgLine>${surefire.args}</surefireArgLine>
+        <failsafeArgLine>${failsafe.args}</failsafeArgLine>
 
     </properties>
 
@@ -140,7 +140,7 @@
                     <version>${maven.surefire-plugin.version}</version>
                     <configuration>
                         <useModulePath>true</useModulePath> <!-- default is true, just being explicit -->
-                        <argLine>@{surefire.args}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
+                        <argLine>@{surefireArgLine}</argLine> <!-- Sets the VM argument line used when unit tests are run -->
                     </configuration>
                 </plugin>
 
