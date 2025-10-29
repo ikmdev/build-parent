@@ -27,7 +27,6 @@
         <maven.failsafe-plugin.version>3.5.3</maven.failsafe-plugin.version>
         <maven.surefire-junit-platform.version>3.5.3</maven.surefire-junit-platform.version>
         <maven.compiler-plugin.version>3.14.0</maven.compiler-plugin.version>
-        <maven.jar-plugin.version>3.4.2</maven.jar-plugin.version>
         <maven.war-plugin.version>3.4.0</maven.war-plugin.version>
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
@@ -239,12 +238,6 @@
                     <groupId>com.github.jlgrock</groupId>
                     <artifactId>pom-check-maven-plugin</artifactId>
                     <version>${maven.pom-check-maven-plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven.jar-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -101,6 +101,7 @@
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
 
         <maven.antrun.plugin>3.1.0</maven.antrun.plugin>
+        <maven.jar-plugin.version>3.4.2</maven.jar-plugin.version>
 
         <!--properties required for sonarqube analysis-->
         <sonar.organization>ikmdev</sonar.organization>
@@ -330,6 +331,11 @@
                     <version>${maven.antrun.plugin}</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
