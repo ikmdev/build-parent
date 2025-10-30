@@ -844,6 +844,15 @@
                             <waitUntil>published</waitUntil>
                             <waitMaxTime>14400</waitMaxTime>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>default-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>publish</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                 </plugins>
