@@ -71,7 +71,7 @@
 
         <!-- Site Lifecycle -->
         <maven.site.plugin>3.21.0</maven.site.plugin>
-        <maven.versions.plugin>2.18.0</maven.versions.plugin>
+        <maven.versions.plugin>2.19.1</maven.versions.plugin>
         <maven.project-info-reports-plugin.version>3.9.0</maven.project-info-reports-plugin.version>
 
         <!-- Command Line tooling -->
@@ -285,6 +285,7 @@
                     <configuration>
                         <featureNamePattern>^(?!(((feature|hotfix|bugfix))\/(IKM|AR|IAT|IC|IKMC|IKDT|IKMD|IIA|IKMW|IKMM|TE)-\d+(-[0-9A-Za-z\-]*)*)|main|prod|master|dev).*$</featureNamePattern>
                         <separateFinishBranches>true</separateFinishBranches>
+                        <versionsMavenPluginVersion>${maven.versions.plugin}</versionsMavenPluginVersion>
                         <gitFlowConfig>
                             <developmentBranch>main</developmentBranch>
                             <productionBranch>main</productionBranch>
