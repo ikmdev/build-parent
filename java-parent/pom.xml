@@ -7,7 +7,7 @@
         <groupId>dev.ikm.build</groupId>
         <artifactId>parent</artifactId>
         <version>1.72.6-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>java-parent</artifactId>
     <name>Java Parent</name>
