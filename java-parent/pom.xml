@@ -239,6 +239,12 @@
                     <artifactId>pom-check-maven-plugin</artifactId>
                     <version>${maven.pom-check-maven-plugin.version}</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${maven.surefire-report-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -707,7 +713,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven.surefire-report-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <id>unit-tests</id>
